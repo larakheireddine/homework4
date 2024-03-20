@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Wordle Assignment 4</title>
+        <style>
+            #game {
+                display: flex;
+                background-color: white;
+                height: 100%;
+                align-items: center;
+                flex-direction: column;
+            }
+            #board {
+                width: 415px;
+            }
+            #guesses {
+                height: 24px;
+                display: inline-block;
+            }
+            #hint {
+                height: 35px;
+                padding-top: 5px;
+            }
+            #button1 {
+                margin-top: 20px;
+                height: 30px;
+                text-align: center;
+                font-size: 18px;
+                border: none;
+                display: inline-block;
+                background-color: black;
+                color: white;
+                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            }
+            .square {border: 1px solid black; display: inline-block;
+				 padding: 5px; vertical-align: top; margin: 5px;
+				 height: 60px; width: 60px; text-align: center;
+				 font-size: 35px;
+                 font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;}
+
+            #title {
+                text-align: center;
+                width: 100%;
+                font-weight: bold;
+                font-size: 20px;
+                color: black;
+                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="title">
+            <h1>Wordle</h1>
+        </div>
+        <div id="game">
+            <div id="board">
+                <script>
+                    var guess_track = [];
+                    var answer_word = 'CLOCK';
+                    var ANSWER = ['C', 'L', 'O', 'C', 'K'];
+                    var MAX_GUESS = 6;
+                    var MAX_LETTER = 5;
+                    const NUM_SQUARES = 30;
+        
+                    for (let i = 0; i < NUM_SQUARES; i++) {
+                        id = "sq" + i;
+                        document.write("<div class='square' id='" + id + "'></div>");
+                    }
+
+                    function getWORD() {
+                        let word = (document.getElementById("guesses").value).toUpperCase();
+
+                        if (word.length > 5 || word.length < 5) {
+                            alert("Please Enter a 5 Letter Word!")
+                        }
+
+                        else {
+                            let letters = Array.from(word);
+                            console.log(guess_track);
+                            console.log(letters);
+
+                            if (guess_track.length === 6) {
+                                alert("There are no more attempts");
+                                return;
+                            }
+                            guess_track.push(word);
+
+                            if (word === guess_track[0]) {
+                                    res = fetch("https://api.dictionaryapi.dev/api/v2/entries/en/" + word)
+                                    .then (res => res.text())
+                                    .then (data => {data=JSON.parse(data);
+                                        if (data.title) {
+                                            alert("Not a real word");
+                                            guess_track.pop(word);
+                                            document.getElementById("guesses").value = "";
+                                            return false;
+                                        }
+                                        else {
+                                            for (let j = 0; j < 5; j++) {
+                                                first_letter = document.getElementById("sq" + j);
+                                                first_letter.innerHTML = letters[j];
+                                                if (ANSWER.includes(letters[j])) {
+                                                    first_letter.style.backgroundColor = 'pink';
+                                                } 
+                                            }
+                                            document.getElementById("guesses").value = "";
+                                        }})
+                                    .then (error => console.log(error));
+                                
+                                if (word === answer_word) {
+                                    alert("Correct!");
+                                    return;
+                                }
+                            }
+
+                            if (word === guess_track[1]) {
+                                    res = fetch("https://api.dictionaryapi.dev/api/v2/entries/en/" + word)
+                                    .then (res => res.text())
+                                    .then (data => {data=JSON.parse(data);
+                                        if (data.title) {
+                                            alert("Not a real word");
+                                            guess_track.pop(word);
+                                            document.getElementById("guesses").value = "";
+                                            return false;
+                                        }
+                                        else {
+                                            for (let j = 0; j < 5; j++) {
+                                                first_letter = document.getElementById("sq" + (j+5));
+                                                first_letter.innerHTML = letters[j];
+                                                if (ANSWER.includes(letters[j])) {
+                                                    first_letter.style.backgroundColor = 'pink';
+                                                } 
+                                            }
+                                            document.getElementById("guesses").value = "";
+                                        }})
+                                    .then (error => console.log(error));
+                                
+                                if (word === answer_word) {
+                                    alert("Correct!");
+                                    return;
+                                }
+                            }
+                            if (word === guess_track[2]) {
+                                    res = fetch("https://api.dictionaryapi.dev/api/v2/entries/en/" + word)
+                                    .then (res => res.text())
+                                    .then (data => {data=JSON.parse(data);
+                                        if (data.title) {
+                                            alert("Not a real word");
+                                            guess_track.pop(word);
+                                            document.getElementById("guesses").value = "";
+                                            return false;
+                                        }
+                                        else {
+                                            for (let j = 0; j < 5; j++) {
+                                                first_letter = document.getElementById("sq" + (j+10));
+                                                first_letter.innerHTML = letters[j];
+                                                if (ANSWER.includes(letters[j])) {
+                                                    first_letter.style.backgroundColor = 'pink';
+                                                } 
+                                            }
+                                            document.getElementById("guesses").value = "";
+                                        }})
+                                    .then (error => console.log(error));
+                                
+                                if (word === answer_word) {
+                                    alert("Correct!");
+                                    return;
+                                }
+                            }
+                            if (word === guess_track[3]) {
+                                    res = fetch("https://api.dictionaryapi.dev/api/v2/entries/en/" + word)
+                                    .then (res => res.text())
+                                    .then (data => {data=JSON.parse(data);
+                                        if (data.title) {
+                                            alert("Not a real word");
+                                            guess_track.pop(word);
+                                            document.getElementById("guesses").value = "";
+                                            return false;
+                                        }
+                                        else {
+                                            for (let j = 0; j < 5; j++) {
+                                                first_letter = document.getElementById("sq" + (j+15));
+                                                first_letter.innerHTML = letters[j];
+                                                if (ANSWER.includes(letters[j])) {
+                                                    first_letter.style.backgroundColor = 'pink';
+                                                } 
+                                            }
+                                            document.getElementById("guesses").value = "";
+                                        }})
+                                    .then (error => console.log(error));
+                                
+                                if (word === answer_word) {
+                                    alert("Correct!");
+                                    return;
+                                }
+                            }
+                            if (word === guess_track[4]) {
+                                    res = fetch("https://api.dictionaryapi.dev/api/v2/entries/en/" + word)
+                                    .then (res => res.text())
+                                    .then (data => {data=JSON.parse(data);
+                                        if (data.title) {
+                                            alert("Not a real word");
+                                            guess_track.pop(word);
+                                            document.getElementById("guesses").value = "";
+                                            return false;
+                                        }
+                                        else {
+                                            for (let j = 0; j < 5; j++) {
+                                                first_letter = document.getElementById("sq" + (j+20));
+                                                first_letter.innerHTML = letters[j];
+                                                if (ANSWER.includes(letters[j])) {
+                                                    first_letter.style.backgroundColor = 'pink';
+                                                } 
+                                            }
+                                            document.getElementById("guesses").value = "";
+                                        }})
+                                    .then (error => console.log(error));
+                                
+                                if (word === answer_word) {
+                                    alert("Correct!");
+                                    return;
+                                }
+                            }
+                            if (word === guess_track[5]) {
+                                    res = fetch("https://api.dictionaryapi.dev/api/v2/entries/en/" + word)
+                                    .then (res => res.text())
+                                    .then (data => {data=JSON.parse(data);
+                                        if (data.title) {
+                                            alert("Not a real word");
+                                            guess_track.pop(word);
+                                            document.getElementById("guesses").value = "";
+                                            return false;
+                                        }
+                                        else {
+                                            for (let j = 0; j < 5; j++) {
+                                                first_letter = document.getElementById("sq" + (j+25));
+                                                first_letter.innerHTML = letters[j];
+                                                if (ANSWER.includes(letters[j])) {
+                                                    first_letter.style.backgroundColor = 'pink';
+                                                } 
+                                            }
+                                            document.getElementById("guesses").value = "";
+                                        }})
+                                    .then (error => console.log(error));
+                                
+                                if (word === answer_word) {
+                                    alert("Correct!");
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                    function debugWORD() {
+                        hint = document.getElementById("hint");
+                        hint.innerHTML = "The word of the day is: " + answer_word;
+                    }
+
+                    function resetWORD() {
+                        for (let i = 0; i < NUM_SQUARES; i++) {
+                            clearsq = document.getElementById("sq" + i);
+                            clearsq.innerHTML = " ";
+                            document.getElementById("guesses").value = "";
+                            clearsq.style.backgroundColor = 'white';
+                        }
+                        guess_track.length = 0;
+
+                    }
+                </script>
+            </div>
+            <div id="guess">
+                <input type="text" id="guesses">
+                <button type="button" onclick="getWORD()" id="button1">Submit</button>
+            </div>
+            <div>
+                <button type="button" onclick="debugWORD()" id="button1">Debug</button>
+                <button type="button" onclick="resetWORD()" id="button1">Reset</button>
+            </div>
+            <div id="hint"></div>
+        </div>
+    </body>
+</html>
